@@ -12,5 +12,9 @@ data class Activitat (
     val accesible: Int,
     val cooperativa: Int,
     val exp: Int,
-    val starPlatinum: Int = 0
+    val starPlatinum: Int = 0,
+    val startDate: String,
+    val startHour: String,
+    val duradaAprox: String,
+    val distanciaRecorreguda: String
 )

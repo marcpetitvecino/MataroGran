@@ -42,6 +42,7 @@ val ACTIVITIES_DIFF = "Dificultat"
 val ACTIVITIES_STARTDATE = "StartDate"
 val ACTIVITIES_STARTHOUR = "StartHour"
 val ACTIVITIES_APROXLENGHT = "DuradaAprox"
+val ACTIVITIES_DISTANCIA = "DistanciaActivitat"
 
 
 
@@ -77,7 +78,8 @@ class Repository(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 ACTIVITIES_DIFF + " INT, " +
                 ACTIVITIES_STARTDATE + " VARCHAR(80), " +
                 ACTIVITIES_STARTHOUR + " VARCHAR(80), " +
-                ACTIVITIES_APROXLENGHT + " VARCHAR(80))";
+                ACTIVITIES_APROXLENGHT + " VARCHAR(80), " +
+                ACTIVITIES_DISTANCIA + " VARCHAR(80))";
 
         p0!!.execSQL(tableUsers)
         p0.execSQL(tableActivities)
@@ -112,25 +114,35 @@ class Repository(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         val db = this.writableDatabase
         val cv = ContentValues()
 
-        cv.put(ACTIVITIES_ID, activity.activitatId)
-        cv.put(ACTIVITIES_TITLE, activity.titolActivitat)
-        cv.put(ACTIVITIES_DESCRIPTION, activity.descActivitat)
-        cv.put(ACTIVITIES_IMAGE, activity.imgDesc)
-        cv.put(ACTIVITIES_LOCATION, activity.localitzacio)
-        cv.put(ACTIVITIES_LATIDUTE, activity.lat)
-        cv.put(ACTIVITIES_LONGITUDE, activity.lon)
-        cv.put(ACTIVITIES_ACCESSIBLE, activity.accesible)
-        cv.put(ACTIVITIES_COOP, activity.cooperativa)
-        cv.put(ACTIVITIES_EXP, activity.exp)
-        cv.put(ACTIVITIES_DIFF, activity.dificultat)
+        if (!checkIfExists(activity.activitatId)) {
 
-        db.insert(ACTIVITIES_TABLENAME, null, cv)
+            cv.put(ACTIVITIES_ID, activity.activitatId)
+            cv.put(ACTIVITIES_TITLE, activity.titolActivitat)
+            cv.put(ACTIVITIES_DESCRIPTION, activity.descActivitat)
+            cv.put(ACTIVITIES_IMAGE, activity.imgDesc)
+            cv.put(ACTIVITIES_LOCATION, activity.localitzacio)
+            cv.put(ACTIVITIES_LATIDUTE, activity.lat)
+            cv.put(ACTIVITIES_LONGITUDE, activity.lon)
+            cv.put(ACTIVITIES_ACCESSIBLE, activity.accesible)
+            cv.put(ACTIVITIES_COOP, activity.cooperativa)
+            cv.put(ACTIVITIES_EXP, activity.exp)
+            cv.put(ACTIVITIES_DIFF, activity.dificultat)
+            cv.put(ACTIVITIES_STARTDATE, activity.startDate)
+            cv.put(ACTIVITIES_STARTHOUR, activity.startHour)
+            cv.put(ACTIVITIES_APROXLENGHT, activity.duradaAprox)
+            cv.put(ACTIVITIES_DISTANCIA, activity.distanciaRecorreguda)
+
+            db.insert(ACTIVITIES_TABLENAME, null, cv)
+
+        }
+
+
     }
 
     fun getActivityCursor(): Cursor {
 
         val db = this.readableDatabase
-        val query = "SELECT * FROM $ACTIVITIES_TABLENAME"
+        val query = "SELECT * FROM $ACTIVITIES_TABLENAME ORDER BY $ACTIVITIES_STARTDATE"
 
         val result = db.rawQuery(query, null)
 
@@ -165,6 +177,10 @@ class Repository(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
             val accesible = c.getInt(c.getColumnIndex(ACTIVITIES_ACCESSIBLE))
             val cooperativa = c.getInt(c.getColumnIndex(ACTIVITIES_COOP))
             val exp = c.getInt(c.getColumnIndex(ACTIVITIES_EXP))
+            val startDate = c.getString(c.getColumnIndex(ACTIVITIES_STARTDATE))
+            val startHour = c.getString(c.getColumnIndex(ACTIVITIES_STARTHOUR))
+            val duradaAprox = c.getString(c.getColumnIndex(ACTIVITIES_APROXLENGHT))
+            val distanciaRecorreguda = c.getString(c.getColumnIndex(ACTIVITIES_DISTANCIA))
 
             return Activitat(
                 activitatId,
@@ -177,8 +193,12 @@ class Repository(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 dificultat,
                 accesible,
                 cooperativa,
-                exp
-
+                exp,
+                0,
+                startDate,
+                startHour,
+                duradaAprox,
+                distanciaRecorreguda
             )
 
         }
@@ -201,6 +221,27 @@ class Repository(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         cursor.close()
 
         return retorn
+
+    }
+
+    fun checkIfExists(id: String): Boolean {
+
+        val db = this.writableDatabase
+        val query = "SELECT * FROM $ACTIVITIES_TABLENAME WHERE $ACTIVITIES_ID = '$id'"
+        val cursor = db.rawQuery(query, null)
+
+        return cursor.moveToFirst()
+
+    }
+
+    fun searchByTitle(title: String): Cursor {
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $ACTIVITIES_TABLENAME WHERE $ACTIVITIES_DESCRIPTION LIKE '%$title%'"
+
+        val result = db.rawQuery(query, null)
+
+        return result
 
     }
 

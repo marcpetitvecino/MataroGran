@@ -12,6 +12,17 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/petanca" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/detailContainer"
         android:layout_width="match_parent"
@@ -100,6 +111,32 @@
             android:textColor="@android:color/black"
             android:textSize="25sp" />
 
+        <TextView
+            android:id="@+id/headerDataInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Data i durada"
+            android:background="@drawable/border"
+            android:textAllCaps="true"
+            android:textColor="#FFFFF800"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="Camí del Pi, 1, 08257"
+            android:textColor="@android:color/black"
+            android:textSize="25sp" />
+
     </LinearLayout>
 
     <Button
@@ -111,5 +148,9 @@
         android:fontFamily="sans-serif-black"
         android:text="PORTA'M!"
         android:textSize="25sp" />
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

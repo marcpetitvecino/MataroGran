@@ -29,9 +29,6 @@ class ActivitatAdapter(val context: Context, cursor: Cursor): CursorAdapter(cont
 
     override fun bindView(p0: View?, p1: Context?, p2: Cursor?) {
 
-        val arrayDist = arrayListOf("500m", "750m", "1000m", "1250m", "2000m")
-        val r = Random.nextInt(0, arrayDist.size)
-        val randDist = arrayDist[r]
 
         icona = p0!!.findViewById(R.id.accountIcon)
         titol = p0.findViewById(R.id.accountTitol)
@@ -41,10 +38,10 @@ class ActivitatAdapter(val context: Context, cursor: Cursor): CursorAdapter(cont
         distancia = p0.findViewById(R.id.accountDistancia)
 
         val iconString = cursor.getString(cursor.getColumnIndex(ACTIVITIES_IMAGE))
+        val distanciaTotal = cursor.getString(cursor.getColumnIndex(ACTIVITIES_DISTANCIA))
 
-        Picasso.get().load(iconString).into(icona);
         titol.text = cursor.getString(cursor.getColumnIndex(ACTIVITIES_TITLE))
-        distancia.text = "Recorregut: $randDist"
+        distancia.text = "Recorregut: $distanciaTotal"
 
         if (cursor.getInt(cursor.getColumnIndex(ACTIVITIES_ACCESSIBLE)) == 0) {
 

@@ -41,7 +41,7 @@
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sessio"
+        android:text="Iniciar Sessió"
         android:textSize="32dp"
         android:textStyle="bold"
         android:elevation="10dp"

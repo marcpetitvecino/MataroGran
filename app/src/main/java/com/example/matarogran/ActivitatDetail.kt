@@ -16,13 +16,14 @@ class ActivitatDetail : AppCompatActivity() {
     private lateinit var titol: TextView
     private lateinit var descripcio: TextView
     private lateinit var localitzacio: TextView
+    private lateinit var durada: TextView
     private lateinit var buttonGo: TextView
     private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detall_activitat)
-
+        this.supportActionBar!!.hide()
         initViews()
         loadData()
         initListeners()
@@ -36,6 +37,7 @@ class ActivitatDetail : AppCompatActivity() {
         descripcio = findViewById(R.id.detailDescription)
         localitzacio = findViewById(R.id.detailLocalitzacio)
         buttonGo = findViewById(R.id.detailGoBtn)
+        durada = findViewById(R.id.detailData)
 
 
     }
@@ -49,6 +51,7 @@ class ActivitatDetail : AppCompatActivity() {
         titol.text = activitat.titolActivitat
         descripcio.text = activitat.descActivitat
         localitzacio.text = activitat.localitzacio
+        durada.text = "El ${activitat.startDate} a les ${activitat.startHour} \nDurada: ${activitat.duradaAprox}"
 
     }
 
@@ -56,7 +59,7 @@ class ActivitatDetail : AppCompatActivity() {
 
         buttonGo.setOnClickListener {
 
-            val coordinatesUri = Uri.parse("geo:${activitat.lat},${activitat.lon}")
+            val coordinatesUri = Uri.parse("geo:0,0?q=${activitat.lat},${activitat.lon}")
             val mapIntent = Intent(Intent.ACTION_VIEW, coordinatesUri)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
