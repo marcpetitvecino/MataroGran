@@ -7,11 +7,10 @@ import retrofit2.http.GET
 
 interface JsonPlaceHolderApi {
 
-    @GET("cuentas")
+    @GET("cuentas.json")
     fun getUsers(): Call<List<User>>
 
-    @GET("activitats")
+    @GET("activitats.json")
     fun getActivities(): Call<List<Activitat>>
-
 
 }

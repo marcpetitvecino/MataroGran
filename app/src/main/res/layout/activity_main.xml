@@ -1,45 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- TODO arreglar el BORDER (drawable.text_view.xmlxml), millorar el BUTTON de LOGIN i afegir la figura blanca amb Android Studio per a ferla responsive -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="@drawable/login_register_background"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hrGuideline272"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hrGuideline887"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vrtGuideline155"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.150" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vrtGuideline865"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.850" />
+
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Sessio"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:elevation="10dp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/edtUser"
+        app:layout_constraintEnd_toStartOf="@+id/vrtGuideline865"
+        app:layout_constraintStart_toStartOf="@+id/vrtGuideline155"
+        app:layout_constraintTop_toTopOf="@+id/hrGuideline272" />
+
+
+
+    <EditText
+        android:id="@+id/edtUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/text_view"
+        android:gravity="center"
+        android:hint="Usuari..."
+        android:padding="5sp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/edtPassword"
+        app:layout_constraintEnd_toStartOf="@+id/vrtGuideline865"
+        app:layout_constraintStart_toStartOf="@+id/vrtGuideline155"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin"/>
+
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/text_view"
+        android:gravity="center"
+        android:hint="Contrasenya..."
+        android:padding="5sp"
+        android:elevation="10dp"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/vrtGuideline865"
+        app:layout_constraintStart_toStartOf="@+id/vrtGuideline155"
+        app:layout_constraintTop_toBottomOf="@+id/edtUser" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="ENTRAR"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/hrGuideline887"
+        app:layout_constraintEnd_toStartOf="@+id/vrtGuideline865"
+        app:layout_constraintStart_toStartOf="@+id/vrtGuideline155"
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
+
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal">
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/rectangle_shape_background"
+        android:baselineAlignBottom="false"
+        android:hapticFeedbackEnabled="false"
+        android:translationZ="-1dp"
+        app:layout_constraintBottom_toTopOf="@+id/hrGuideline887"
+        app:layout_constraintEnd_toStartOf="@+id/vrtGuideline865"
+        app:layout_constraintStart_toStartOf="@+id/vrtGuideline155"
+        app:layout_constraintTop_toTopOf="@+id/hrGuideline272"
+        app:srcCompat="@drawable/rectangle_shape_background" />
 
-    </ImageView>
-
-    <EditText
-        android:id="@+id/loginUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </EditText>
-
-    <EditText
-        android:id="@+id/loginPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </EditText>
-
-    <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </Button>
-
-    <Button
-        android:id="@+id/guestBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </Button>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

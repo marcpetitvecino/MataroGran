@@ -1,16 +1,17 @@
 package com.example.matarogran
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.matarogran.Interfaces.JsonPlaceHolderApi
 import com.example.matarogran.Model.Activitat
 import com.example.matarogran.Model.User
+import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,37 +20,48 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var userName: String
-    private lateinit var userPassword: String
+    private lateinit var userName: EditText
+    private lateinit var userPassword: EditText
     private lateinit var loginBtn: Button
     private val context = this
-    private val db = UsersRepository(context)
+    private val db = Repository(context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
-
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-
+        this.supportActionBar!!.hide()
         initViews()
         initListeners()
         getData()
-
-        return super.onCreateView(name, context, attrs)
     }
+
 
     private fun initViews() {
 
-        userName = findViewById(R.id.loginUserName)
-        userPassword = findViewById(R.id.loginPassword)
-        loginBtn = findViewById(R.id.loginBtn)
+        userName = findViewById(R.id.edtUser)
+        userPassword = findViewById(R.id.edtPassword)
+        loginBtn = findViewById(R.id.button)
 
     }
 
     private fun initListeners() {
 
-        loginBtn.setOnClickListener {
+        button.setOnClickListener {
+
+            if (userName.text.toString() == "dev" && userPassword.text.toString() == "dev") {
+
+                val intent = Intent(this, ListAct::class.java)
+                startActivity(intent)
+
+            } else {
+
+                val dialog = AlertDialog.Builder(context)
+                    .setTitle("Oops!")
+                    .setMessage("Usuari o contrasenya incorrecte")
+                val alert = dialog.create()
+                alert.show()
+
+            }
 
 
 
@@ -59,9 +71,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData() {
 
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://xaambo.github.io/JSONRestAPI/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         val jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
